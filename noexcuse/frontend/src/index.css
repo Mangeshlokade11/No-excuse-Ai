@@ -1,0 +1,204 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    @apply bg-dark-950 text-white font-body antialiased overflow-x-hidden;
+    background-image:
+      radial-gradient(ellipse at 20% 10%, rgba(0,245,255,0.04) 0, transparent 50%),
+      radial-gradient(ellipse at 80% 90%, rgba(191,0,255,0.04) 0, transparent 50%),
+      radial-gradient(ellipse at 60% 40%, rgba(0,255,136,0.02) 0, transparent 40%);
+  }
+
+  ::-webkit-scrollbar { width: 3px; height: 3px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(0,245,255,0.2); border-radius: 9999px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(0,245,255,0.5); }
+
+  ::selection { background: rgba(0,245,255,0.2); color: #00f5ff; }
+}
+
+@layer components {
+  /* Glass card */
+  .glass {
+    background: rgba(255,255,255,0.03);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .glass-neon {
+    background: rgba(0,245,255,0.03);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(0,245,255,0.15);
+  }
+  .card {
+    @apply glass rounded-2xl p-5 shadow-card;
+  }
+  .card-neon {
+    @apply glass-neon rounded-2xl p-5;
+    box-shadow: 0 0 0 1px rgba(0,245,255,0.1), 0 8px 32px rgba(0,0,0,0.5);
+  }
+
+  /* Neon text */
+  .text-neon { color: #00f5ff; }
+  .text-gradient-neon {
+    background: linear-gradient(90deg, #00f5ff, #bf00ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .text-gradient-green {
+    background: linear-gradient(90deg, #00ff88, #00f5ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .text-gradient-fire {
+    background: linear-gradient(90deg, #ff0080, #ff6600);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Neon border gradient */
+  .border-neon {
+    background: linear-gradient(#050510, #050510) padding-box,
+                linear-gradient(135deg, #00f5ff, #bf00ff) border-box;
+    border: 1px solid transparent;
+  }
+  .border-neon-green {
+    background: linear-gradient(#050510, #050510) padding-box,
+                linear-gradient(135deg, #00ff88, #00f5ff) border-box;
+    border: 1px solid transparent;
+  }
+
+  /* Buttons */
+  .btn-neon {
+@apply relative overflow-hidden font-display font-bold tracking-wide px-6 py-3 rounded-xl transition-all duration-200;
+    background: linear-gradient(135deg, #00f5ff, #bf00ff);
+    color: #000;
+    box-shadow: 0 0 20px rgba(0,245,255,0.3);
+  }
+  .btn-neon:hover {
+    box-shadow: 0 0 30px rgba(0,245,255,0.6), 0 0 60px rgba(191,0,255,0.3);
+    transform: translateY(-1px);
+  }
+  .btn-neon:active { transform: translateY(0) scale(0.98); }
+  .btn-neon:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
+
+  .btn-ghost-neon {
+    @apply px-5 py-2.5 rounded-xl font-medium text-sm transition-all duration-200;
+    color: rgba(0,245,255,0.7);
+    border: 1px solid rgba(0,245,255,0.15);
+    background: rgba(0,245,255,0.04);
+  }
+  .btn-ghost-neon:hover {
+    color: #00f5ff;
+    border-color: rgba(0,245,255,0.4);
+    background: rgba(0,245,255,0.08);
+    box-shadow: 0 0 15px rgba(0,245,255,0.2);
+  }
+
+  .btn-outline {
+    @apply px-5 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 text-white/60;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.02);
+  }
+  .btn-outline:hover { @apply text-white border-white/20 bg-white/5; }
+
+  /* Input */
+  .input-neon {
+    @apply w-full rounded-xl px-4 py-3 text-white text-sm outline-none transition-all duration-200;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .input-neon::placeholder { color: rgba(255,255,255,0.25); }
+  .input-neon:focus {
+    border-color: rgba(0,245,255,0.5);
+    background: rgba(0,245,255,0.03);
+    box-shadow: 0 0 0 3px rgba(0,245,255,0.08);
+  }
+
+  /* XP bar */
+  .xp-track { @apply w-full rounded-full overflow-hidden; height: 6px; background: rgba(255,255,255,0.06); }
+  .xp-fill  { height: 6px; border-radius: 9999px; background: linear-gradient(90deg, #00f5ff, #bf00ff); transition: width 0.8s cubic-bezier(0.16,1,0.3,1); }
+
+  /* Neon badge */
+  .badge-neon {
+    @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold font-mono;
+    background: rgba(0,245,255,0.1);
+    color: #00f5ff;
+    border: 1px solid rgba(0,245,255,0.2);
+  }
+
+  /* Nav active */
+  .nav-active {
+    color: #00f5ff !important;
+    background: rgba(0,245,255,0.08) !important;
+    border-color: rgba(0,245,255,0.2) !important;
+    box-shadow: 0 0 15px rgba(0,245,255,0.1) inset;
+  }
+
+  /* Habit cell */
+  .hcell {
+    @apply w-7 h-7 rounded-md flex items-center justify-center text-xs cursor-pointer transition-all duration-150;
+    border: 1px solid rgba(255,255,255,0.06);
+    background: rgba(255,255,255,0.02);
+  }
+  .hcell:hover { border-color: rgba(0,245,255,0.3); background: rgba(0,245,255,0.05); }
+  .hcell-done { border-color: rgba(0,245,255,0.5) !important; background: rgba(0,245,255,0.15) !important; }
+  .hcell-today { box-shadow: 0 0 0 2px #00f5ff, 0 0 8px rgba(0,245,255,0.4); }
+
+  /* Scan line effect */
+  .scanline::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(0,245,255,0.4), transparent);
+    animation: scan 4s linear infinite;
+    pointer-events: none;
+  }
+
+  /* Stat card hover */
+  .stat-card {
+    @apply card transition-all duration-300 cursor-default;
+  }
+  .stat-card:hover {
+    border-color: rgba(0,245,255,0.2);
+    box-shadow: 0 0 20px rgba(0,245,255,0.08), 0 4px 24px rgba(0,0,0,0.6);
+    transform: translateY(-2px);
+  }
+
+  /* Page enter */
+  .page-enter { animation: slideUp 0.4s cubic-bezier(0.16,1,0.3,1); }
+
+  /* No scrollbar */
+  .no-scroll::-webkit-scrollbar { display: none; }
+  .no-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* Glow dot */
+  .glow-dot {
+    @apply w-2 h-2 rounded-full;
+    background: #00f5ff;
+    box-shadow: 0 0 6px #00f5ff, 0 0 12px #00f5ff;
+    animation: glowPulse 2s ease-in-out infinite;
+  }
+}
+
+/* Grid bg pattern */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(0,245,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,245,255,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Neon glow on images */
+.avatar-neon {
+  box-shadow: 0 0 0 2px rgba(0,245,255,0.4), 0 0 20px rgba(0,245,255,0.2);
+}

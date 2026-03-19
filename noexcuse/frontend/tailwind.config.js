@@ -1,0 +1,72 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ['./index.html','./src/**/*.{js,jsx}'],
+  darkMode: 'class',
+  theme: {
+    extend: {
+      fontFamily: {
+        display: ['"Exo 2"','sans-serif'],
+        body:    ['"DM Sans"','sans-serif'],
+        mono:    ['"JetBrains Mono"','monospace'],
+      },
+      colors: {
+        neon: {
+          cyan:   '#00f5ff',
+          purple: '#bf00ff',
+          green:  '#00ff88',
+          pink:   '#ff0080',
+          yellow: '#ffee00',
+          orange: '#ff6600',
+        },
+        dark: {
+          950: '#020208',
+          900: '#050510',
+          800: '#08081a',
+          700: '#0c0c22',
+          600: '#10102e',
+          500: '#14143a',
+          400: '#1a1a48',
+          300: '#242460',
+        },
+      },
+      backgroundImage: {
+        'neon-gradient': 'linear-gradient(135deg,#00f5ff,#bf00ff)',
+        'neon-gradient-green': 'linear-gradient(135deg,#00ff88,#00f5ff)',
+        'neon-gradient-fire': 'linear-gradient(135deg,#ff0080,#ff6600)',
+      },
+      boxShadow: {
+        'neon-cyan':   '0 0 20px rgba(0,245,255,0.5), 0 0 60px rgba(0,245,255,0.2)',
+        'neon-purple': '0 0 20px rgba(191,0,255,0.5), 0 0 60px rgba(191,0,255,0.2)',
+        'neon-green':  '0 0 20px rgba(0,255,136,0.5)',
+        'neon-pink':   '0 0 20px rgba(255,0,128,0.5)',
+        'neon-sm':     '0 0 10px rgba(0,245,255,0.3)',
+        'card':        '0 4px 24px rgba(0,0,0,0.6)',
+        'glass':       '0 8px 32px rgba(0,0,0,0.5)',
+      },
+      animation: {
+        'pulse-neon':  'pulseNeon 2s ease-in-out infinite alternate',
+        'scan':        'scan 3s linear infinite',
+        'float':       'float 6s ease-in-out infinite',
+        'slide-up':    'slideUp 0.4s cubic-bezier(0.16,1,0.3,1)',
+        'fade-in':     'fadeIn 0.5s ease-out',
+        'scale-in':    'scaleIn 0.3s cubic-bezier(0.16,1,0.3,1)',
+        'glow-pulse':  'glowPulse 2s ease-in-out infinite',
+        'flicker':     'flicker 4s linear infinite',
+        'shimmer':     'shimmer 2.5s linear infinite',
+        'spin-slow':   'spin 8s linear infinite',
+      },
+      keyframes: {
+        pulseNeon: { from:{boxShadow:'0 0 10px rgba(0,245,255,0.3)'}, to:{boxShadow:'0 0 30px rgba(0,245,255,0.8), 0 0 60px rgba(0,245,255,0.4)'} },
+        scan:      { '0%':{transform:'translateY(-100%)'}, '100%':{transform:'translateY(100vh)'} },
+        float:     { '0%,100%':{transform:'translateY(0)'}, '50%':{transform:'translateY(-12px)'} },
+        slideUp:   { from:{opacity:0,transform:'translateY(24px)'}, to:{opacity:1,transform:'translateY(0)'} },
+        fadeIn:    { from:{opacity:0}, to:{opacity:1} },
+        scaleIn:   { from:{opacity:0,transform:'scale(0.92)'}, to:{opacity:1,transform:'scale(1)'} },
+        glowPulse: { '0%,100%':{opacity:1}, '50%':{opacity:0.5} },
+        flicker:   { '0%,19%,21%,23%,25%,54%,56%,100%':{opacity:1}, '20%,24%,55%':{opacity:0.4} },
+        shimmer:   { '0%':{backgroundPosition:'-1000px 0'}, '100%':{backgroundPosition:'1000px 0'} },
+      },
+    },
+  },
+  plugins: [],
+}
