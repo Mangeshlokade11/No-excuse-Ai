@@ -1,5 +1,30 @@
 import axios from 'axios'
-const api = axios.create({ baseURL: import.meta.env.VITE_API_URL || '/api', timeout: 15000 })
-api.interceptors.request.use(c => { const t = localStorage.getItem('nex_token'); if (t) c.headers.Authorization = `Bearer ${t}`; return c })
-api.interceptors.response.use(r => r, e => { if (e.response?.status === 401) { localStorage.clear(); window.location.href = '/login' } return Promise.reject(e) })
+
+// Use full API URL if defined, otherwise fallback to '/api' for local dev
+const baseURL = import.meta.env.VITE_API_URL?.replace(/\/$/, '') || '/api'
+
+const api = axios.create({
+  baseURL,
+  timeout: 15000,
+})
+
+// Add auth token if present
+api.interceptors.request.use(config => {
+  const token = localStorage.getItem('nex_token')
+  if (token) config.headers.Authorization = `Bearer ${token}`
+  return config
+})
+
+// Handle 401 globally
+api.interceptors.response.use(
+  response => response,
+  error => {
+    if (error.response?.status === 401) {
+      localStorage.clear()
+      window.location.href = '/login'
+    }
+    return Promise.reject(error)
+  }
+)
+
 export default api
