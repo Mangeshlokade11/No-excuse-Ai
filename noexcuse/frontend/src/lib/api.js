@@ -1,23 +1,18 @@
 import axios from 'axios'
 
-// 🔥 FORCE correct backend (no fallback mistake)
-const baseURL = import.meta.env.VITE_API_URL
-  ? import.meta.env.VITE_API_URL.replace(/\/$/, '') + '/api'
-  : 'https://no-excuse-ai-1.onrender.com/api'
+const baseURL = import.meta.env.VITE_API_URL + '/api'
 
 const api = axios.create({
   baseURL,
   timeout: 15000,
 })
 
-// Add auth token
 api.interceptors.request.use(config => {
   const token = localStorage.getItem('nex_token')
   if (token) config.headers.Authorization = `Bearer ${token}`
   return config
 })
 
-// Handle 401
 api.interceptors.response.use(
   res => res,
   err => {
