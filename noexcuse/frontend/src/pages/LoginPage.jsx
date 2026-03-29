@@ -17,9 +17,11 @@ export default function LoginPage() {
     if (!f.email || !f.password) return toast.error('All fields required')
     setL(true)
     try {
-      await login(f.email, f.password)
-      toast.success('Welcome back!')
-      navigate('/dashboard')
+      const data = await login(f.email, f.password)
+      if (data?.user) {
+        toast.success('Welcome back!')
+        navigate('/dashboard')
+      }
     } catch(e) {
       toast.error(e.response?.data?.message || 'Login failed')
     } finally { setL(false) }

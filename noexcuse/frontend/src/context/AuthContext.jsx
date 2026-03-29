@@ -7,7 +7,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
 
-  // On app load, check if user token exists
+  // Load user on app start
   useEffect(() => {
     const init = async () => {
       const token = localStorage.getItem('nex_token')
