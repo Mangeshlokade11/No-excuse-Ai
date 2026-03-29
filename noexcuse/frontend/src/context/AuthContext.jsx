@@ -1,35 +1,51 @@
-import { createContext, useContext } from 'react'
-import api from '../lib/api'
+import { createContext, useContext, useState, useEffect } from 'react'
+import { login as apiLogin, signup as apiSignup, logout as apiLogout, getUserProfile } from '../api'
 
 const AuthContext = createContext()
 
-export const useAuth = () => useContext(AuthContext)
-
 export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null)
+  const [loading, setLoading] = useState(true)
+
+  // On app load, check if user token exists
+  useEffect(() => {
+    const init = async () => {
+      const token = localStorage.getItem('nex_token')
+      if (token) {
+        try {
+          const data = await getUserProfile()
+          setUser(data)
+        } catch {
+          apiLogout()
+        }
+      }
+      setLoading(false)
+    }
+    init()
+  }, [])
 
   const login = async (email, password) => {
-    const { data } = await api.post('/auth/login', {
-      email,
-      password
-    })
-    localStorage.setItem('nex_token', data.token)
+    const data = await apiLogin(email, password)
+    if (data?.user) setUser(data.user)
     return data
   }
 
   const signup = async (name, email, password, username) => {
-    const { data } = await api.post('/auth/signup', {
-      name,
-      email,
-      password,
-      username
-    })
-    localStorage.setItem('nex_token', data.token)
+    const data = await apiSignup(name, email, password, username)
+    if (data?.user) setUser(data.user)
     return data
   }
 
+  const logout = () => {
+    apiLogout()
+    setUser(null)
+  }
+
   return (
-    <AuthContext.Provider value={{ login, signup }}>
+    <AuthContext.Provider value={{ user, loading, login, signup, logout }}>
       {children}
     </AuthContext.Provider>
   )
 }
+
+export const useAuth = () => useContext(AuthContext)

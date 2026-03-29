@@ -28,23 +28,25 @@ api.interceptors.response.use(
 
 // Login function
 export const login = async (email, password) => {
-  try {
-    const res = await api.post('/auth/login', { email, password })
-    // Save token to localStorage
-    if (res.data?.token) localStorage.setItem('nex_token', res.data.token)
-    return res.data
-  } catch (err) {
-    throw err.response?.data || err
-  }
+  const res = await api.post('/auth/login', { email, password })
+  if (res.data?.token) localStorage.setItem('nex_token', res.data.token)
+  return res.data
 }
 
-// Logout function
+// Signup function
+export const signup = async (name, email, password, username) => {
+  const res = await api.post('/auth/signup', { name, email, password, username })
+  if (res.data?.token) localStorage.setItem('nex_token', res.data.token)
+  return res.data
+}
+
+// Logout
 export const logout = () => {
   localStorage.clear()
   window.location.href = '/login'
 }
 
-// Example authenticated GET request
+// Example authenticated GET
 export const getUserProfile = async () => {
   const res = await api.get('/users/me')
   return res.data
