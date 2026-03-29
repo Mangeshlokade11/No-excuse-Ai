@@ -8,7 +8,10 @@ export const useAuth = () => useContext(AuthContext)
 export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
-    const { data } = await api.post('/auth/login', { email, password })
+    const { data } = await api.post('/auth/login', {
+      email,
+      password
+    })
     localStorage.setItem('nex_token', data.token)
     return data
   }

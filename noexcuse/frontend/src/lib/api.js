@@ -1,29 +1,31 @@
 import axios from 'axios'
 
-// Use full API URL if defined, otherwise fallback to '/api' for local dev
-const baseURL = import.meta.env.VITE_API_URL?.replace(/\/$/, '') || '/api'
+// 🔥 FORCE correct backend (no fallback mistake)
+const baseURL = import.meta.env.VITE_API_URL
+  ? import.meta.env.VITE_API_URL.replace(/\/$/, '') + '/api'
+  : 'https://no-excuse-ai-1.onrender.com/api'
 
 const api = axios.create({
   baseURL,
   timeout: 15000,
 })
 
-// Add auth token if present
+// Add auth token
 api.interceptors.request.use(config => {
   const token = localStorage.getItem('nex_token')
   if (token) config.headers.Authorization = `Bearer ${token}`
   return config
 })
 
-// Handle 401 globally
+// Handle 401
 api.interceptors.response.use(
-  response => response,
-  error => {
-    if (error.response?.status === 401) {
+  res => res,
+  err => {
+    if (err.response?.status === 401) {
       localStorage.clear()
       window.location.href = '/login'
     }
-    return Promise.reject(error)
+    return Promise.reject(err)
   }
 )
 
