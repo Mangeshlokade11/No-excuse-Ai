@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import toast from 'react-hot-toast'
 import { Zap, Eye, EyeOff, Mail, Lock, ArrowRight } from 'lucide-react'
@@ -10,17 +10,17 @@ export default function LoginPage() {
   const [f, setF] = useState({ email:'', password:'' })
   const [show, setShow] = useState(false)
   const [loading, setL] = useState(false)
-  const set = k => e => setF(p=>({...p,[k]:e.target.value}))
+  const set = k => e => setF(p => ({ ...p, [k]: e.target.value }))
 
   const submit = async e => {
     e.preventDefault()
     if (!f.email || !f.password) return toast.error('All fields required')
     setL(true)
     try {
-      await login(f.email, f.password)   // <-- just wait for login
+      await login(f.email, f.password)
       toast.success('Welcome back!')
-      navigate('/dashboard')             // <-- always redirect after success
-    } catch(e) {
+      navigate('/dashboard')
+    } catch (e) {
       toast.error(e.response?.data?.message || 'Login failed')
     } finally { setL(false) }
   }
